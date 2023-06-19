@@ -4,12 +4,21 @@ fos_rest:
         rules:
            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
     routing_loader: false
-    
+    body_listener:
+        array_normalizer: fos_rest.normalizer.camel_keys
+
+    # mise en place de la configuraion de serializer personélisé
+    service:
+        # serializer: fos_rest.serializer.jms
+        serializer: jms_camel_case
+        
+    # pour activer le listener du view au moment du return
+    view:
+        formats: { json: true, xml: false, rss: false }
+        view_response_listener: true
 
 
     # ENCORE en attente de confirmation
-    service:
-        serializer: fos_rest.serializer.jms
     # ENCORE en attente de confirmation
 
 #    param_fetcher_listener:  true

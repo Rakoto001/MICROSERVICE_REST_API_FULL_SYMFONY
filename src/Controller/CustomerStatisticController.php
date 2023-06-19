@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\DTO\Transformer\CustomerResponseDtoTransformers;
+use App\Services\Serializer\DTOSerializerService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,8 +30,9 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerStatisticController extends AbstractFOSRestController
 {
     private $serializer;
+    private $ownSerializer;
     
-    public function __construct(SerializerInterface $serializer) {
+    public function __construct(SerializerInterface $serializer, DTOSerializerService $ownSerializer) {
         // $this->serializer = $serializer;
         $this->serializer = SerializerBuilder::create()
             ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy())
@@ -44,6 +46,8 @@ class CustomerStatisticController extends AbstractFOSRestController
             })
             ->build()
         ;
+
+        $this->ownSerializer = $ownSerializer;
     }
     /**
      * @Rest\Get("/customer/statistic", name="app_customer_statistic")
@@ -53,24 +57,28 @@ class CustomerStatisticController extends AbstractFOSRestController
     {
         $customers = $this->getDoctrine()->getRepository(Customer::class)->findAll();
         $customer = reset($customers);
-        // dd($request);
+
+        // $this->ownSerializer->serialize($customer, 'json');
+        // dd($this->getView());
 
         /** function dans AbstractApiController*/
-        // $customer = $customerDto->transformFromObject($customer);
+        $customer = $customerDto->transformFromObject($customer);
         // return $this->respond($customer);
         /** function dans AbstractApiController*/
 
 
 
         /** simulation avec new COntext */
-        $context = new Context();
-        $context->setGroups(["app_customer", "app_read"]);
+        // $context = new Context();
+        // $context->setGroups(["app_customer", "app_read"]);
         
-        $jmsContext = $this->getJmsContext($context) ;
+        // $jmsContext = $this->getJmsContext($context) ;
         
-        $presonalzedNormalization = $this->serializer->serialize($customer, 'json', $jmsContext);
+        // $presonalzedNormalization = $this->serializer->serialize($customer, 'json', $jmsContext);
 
-        return new Response($presonalzedNormalization);
+        // return new Response('test');
+
+        return $customer;
 
     }
 

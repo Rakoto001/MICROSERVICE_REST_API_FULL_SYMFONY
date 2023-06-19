@@ -7,7 +7,7 @@ namespace App\Controller;
 
 use App\DTO\Transformer\OrderResponseDtoTransformers;
 use App\Entity\Order;
-use App\services\OrderService;
+use App\Services\OrderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
