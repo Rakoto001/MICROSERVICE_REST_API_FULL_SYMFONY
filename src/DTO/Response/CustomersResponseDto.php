@@ -10,13 +10,13 @@ class CustomersResponseDto
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"app_customer"})
+     * @Serializer\Groups({"app_customer", "read:Order"})
      */
     public string $email;
 
     /**
      * @Serializer\Type("int")
-     * @Serializer\Groups({"app_customer"})
+     * @Serializer\Groups({"app_customer", "read:Order"})
      */
     public string $phoneNumber;
 

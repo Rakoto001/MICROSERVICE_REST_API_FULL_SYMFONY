@@ -63,7 +63,7 @@ class CustomerStatisticController extends AbstractApiController
 
         /** function dans AbstractApiController*/
         $customer = $customerDto->transformFromObject($customer);
-        return $this->respond($customer);
+        // return $this->respond($customer);
         /** function dans AbstractApiController*/
 
 
@@ -78,7 +78,7 @@ class CustomerStatisticController extends AbstractApiController
 
         // return new Response('test');
 
-        // return $customer;
+        return $customer;
 
     }
 

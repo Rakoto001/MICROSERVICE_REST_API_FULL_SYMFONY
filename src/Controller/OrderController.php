@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use FOS\RestBundle\Controller\Annotations as Rest;
+
+
  /**
  * @Route("/api", name="api_")
  */
@@ -23,17 +26,21 @@ class OrderController extends AbstractApiController
     public function __construct(OrderService $orderService) {
         $this->orderService = $orderService;
     }
+
     /**
-     * @Route("/order", name="app_order")
+     * @Rest\Get("/order", name="app_order")
+     * @Rest\View(serializerGroups={"read:Order"})
      */
-    public function index(OrderResponseDtoTransformers $orderdto): Response
+    public function index(OrderResponseDtoTransformers $orderdto)
     {
 
         $aOrders = $this->orderService->findAllOrders();
         $aOrder = reset($aOrders);
         $order = $orderdto->transformFromObject($aOrder);
 
-        return $this->respond($order);
+        // return $this->respond($order);
         // return new JsonResponse($order);
+
+        return $order;
     }
 }

@@ -17,16 +17,21 @@ class OrdersResponseDto
 
     /**
      * @Serializer\Type("string")
+     * @Serializer\Groups({"read:Order"})
+     * 
      */
     public string $comment;
     
     /**
      * @Serializer\Type("App\DTO\Response\CustomersResponseDto")
+     * @Serializer\Groups({"read:Order"})
+     * 
      */
     public CustomersResponseDto $customer;
 
     /**
      * @Serializer\Type("array<App\DTO\Response\ProductSResponseDto>")
+     * @Serializer\Groups({"read:Order"})
      */
     public array $product;
 
