@@ -26,8 +26,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Route("/api", name="api_")
  */
-// class CustomerStatisticController extends AbstractApiController
-class CustomerStatisticController extends AbstractFOSRestController
+class CustomerStatisticController extends AbstractApiController
+// class CustomerStatisticController extends AbstractFOSRestController
 {
     private $serializer;
     private $ownSerializer;
@@ -63,7 +63,7 @@ class CustomerStatisticController extends AbstractFOSRestController
 
         /** function dans AbstractApiController*/
         $customer = $customerDto->transformFromObject($customer);
-        // return $this->respond($customer);
+        return $this->respond($customer);
         /** function dans AbstractApiController*/
 
 
@@ -78,7 +78,7 @@ class CustomerStatisticController extends AbstractFOSRestController
 
         // return new Response('test');
 
-        return $customer;
+        // return $customer;
 
     }
 
