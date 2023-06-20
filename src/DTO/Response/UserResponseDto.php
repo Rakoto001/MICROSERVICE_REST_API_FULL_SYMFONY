@@ -21,9 +21,9 @@ class UserResponseDto
     public array $role;
 
       /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message: 'ce champ doit etre rempli')
      */
-    public string $password;
+    public $password;
 
 
 
