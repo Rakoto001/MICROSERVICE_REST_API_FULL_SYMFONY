@@ -36,3 +36,9 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
+    App\Services\Serializer\FormExceptionNormalizer:
+        tags: ['serializer.normalizer']
+        
+    App\Factory\NormalizerFactory:
+        arguments: [!tagged serializer.normalizer]
+        public: true
