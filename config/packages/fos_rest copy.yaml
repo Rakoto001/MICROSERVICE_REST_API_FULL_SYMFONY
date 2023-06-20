@@ -4,14 +4,8 @@ fos_rest:
         rules:
            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
     routing_loader: false
-
-    # L'écouteur du corps de la requête permet de décoder le contenu d'une requête afin 
-    # de remplir le sac de paramètres "request" de la requête
     body_listener:
-        # e. Si vous souhaitez que l'écouteur de corps transforme les touches soulignées en touches à casse camel,
-        #  vous pouvez utiliser le camel_keysnormalisateur
         array_normalizer: fos_rest.normalizer.camel_keys
-        
 
     # mise en place de la configuraion de serializer personélisé
     service:

@@ -82,6 +82,23 @@ class CustomerStatisticController extends AbstractApiController
 
     }
 
+    /**
+     * @Rest\Get("/customers/list", name="api_customer_list")
+     */
+    public function listAllCustomers(Request $request)
+    {
+        dd('inside');
+    }
+
+
+    /**
+     * @Rest\Post("/customers/list", name="api_customer_create")
+     */
+    public function createCustomers(Request $request)
+    {
+        dd('inside');
+    }
+
 
 
 
