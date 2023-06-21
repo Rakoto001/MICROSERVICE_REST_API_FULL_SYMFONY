@@ -16,6 +16,7 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
 use App\DTO\Transformer\InputSearchTransformer\SearchTypeBodyDtoTransformers;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
+use App\Services\ORMService\BaseService;
 
 /**
  * @Route("/api", name="api_")
@@ -24,10 +25,12 @@ class CarSearchApiController extends AbstractApiController
 {
     private $validator;
     private $rSResponse;
+    private $baseService;
 
-    public function __construct(OutputGlobalSearchResponse $rSResponse)
+    public function __construct(OutputGlobalSearchResponse $rSResponse, BaseService $baseService)
     {
         $this->rSResponse = $rSResponse;
+        $this->baseService = $baseService;
     }
 
     /**
@@ -36,6 +39,7 @@ class CarSearchApiController extends AbstractApiController
     public function globalSearch(Request $request, SearchTypeBodyDtoTransformers $oType)
     {
         $allInputParamsSearch = $request->request->all();
+        $this->baseService->formalizeInput($allInputParamsSearch);
 
         // $oType = $oType->transformSearchInputTypeObject(); //transformSearchInputTypeObject
         $oOutSearch = $this->rSResponse->outputGlobalSearch();
@@ -45,11 +49,11 @@ class CarSearchApiController extends AbstractApiController
     //  * @Rest\View(serializerGroups={"api_global_search"})
     //  return ($oOutSearch); 
 
-    // "marque": "",
-    // "modele": "",
-    // "boiteVitesse": [""],
-    // "km": 0,
-    // "dateSortie": ""
+                // "marque": "",
+                // "modele": "",
+                // "boiteVitesse": [""],
+                // "km": 0,
+                // "dateSortie": ""
         return new JSONResponse($oOutSearch);
     }
 }
