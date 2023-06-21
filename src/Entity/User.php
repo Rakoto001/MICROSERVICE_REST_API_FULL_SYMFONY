@@ -12,11 +12,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_8D93D649E7927C74", columns={"email"})})
  * @ORM\Entity
  */
-class User implements UserInterface 
+class User implements UserInterface
 {
 
-    public function getSalt(){
-
+    public function getSalt()
+    {
     }
 
     /**
@@ -25,19 +25,23 @@ class User implements UserInterface
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
      */
-    public function eraseCredentials(){
-
+    public function eraseCredentials()
+    {
     }
 
+    /**
+     * afin d eviter le INVALID CRETENTIALS dans les endpoint
+     *
+     * @return void
+     */
     public function getUsername()
     {
 
-        return $this->userName ;
-        
+        return $this->email;
     }
 
 
-    
+
     /**
      * @var int
      *
@@ -59,7 +63,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="roles", type="json", nullable=false)
      * @Assert\Type(
-     *     type="string",
+     *     type="array",
      *     message="The value {{ value }} is not a valid {{ type }}."
      * )
      */
@@ -72,12 +76,6 @@ class User implements UserInterface
      * @Assert\Type(
      *     type="string",
      *     message="The value {{ value }} is not a valid {{ type }}."
-     * )
-     * @Assert\Length(
-     *      min = 7,
-     *      max = 50,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
      * )
      */
     private $password;
@@ -121,7 +119,7 @@ class User implements UserInterface
         return $this->password;
     }
 
-  
+
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -135,6 +133,4 @@ class User implements UserInterface
 
         return $this;
     }
-
-
 }
