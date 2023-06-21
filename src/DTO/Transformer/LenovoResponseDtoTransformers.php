@@ -33,6 +33,8 @@ class LenovoResponseDtoTransformers extends AbstractResponseDtoTransformers
         $dtoLenovo->comment = $order->getComment();
         $dtoLenovo->customer = $this->customerDtotransformer->transformFromObject($order->getCustomer());
         $dtoLenovo->product = $this->productDtotransformer->transformFromObjects($order->getproduct()->getValues());
+
+        dd($dtoLenovo);
       
         return $dtoLenovo;
     }

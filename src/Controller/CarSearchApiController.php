@@ -10,9 +10,10 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Controller\Annotations as Rest;
-
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+use App\DTO\Transformer\InputSearchTransformer\SearchTypeBodyDtoTransformers;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/api", name="api_")
@@ -30,22 +31,12 @@ class CarSearchApiController extends AbstractApiController
     /**
      * @Rest\Post("/cars/global/search", name="api_global_search_cars")
      */
-    public function globalSearch(Request $request)
+    public function globalSearch(Request $request, SearchTypeBodyDtoTransformers $oType)
     {
         $allInputParamsSearch = $request->request->all();
-        dd($allInputParamsSearch);
-//         recherche glob :
-// - reference string 
-// -marsue string 
-// - modele string 
-// motorisation string 
-// energie
-// boite de vitesse 
-// -couleur
-// - date de mise en circ DataTime
-// nombre de km intefer
-// type vendeur
-       
 
+        $oType = $oType->transformSearchInputTypeObject(); //transformSearchInputTypeObject
+        
+        return new JsonResponse($oType);
     }
 }
