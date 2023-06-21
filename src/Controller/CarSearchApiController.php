@@ -44,6 +44,12 @@ class CarSearchApiController extends AbstractApiController
         //  tsimaintsy mi return ciew zay vo mandeha le listener
     //  * @Rest\View(serializerGroups={"api_global_search"})
     //  return ($oOutSearch); 
+
+    // "marque": "",
+    // "modele": "",
+    // "boiteVitesse": [""],
+    // "km": 0,
+    // "dateSortie": ""
         return new JSONResponse($oOutSearch);
     }
 }

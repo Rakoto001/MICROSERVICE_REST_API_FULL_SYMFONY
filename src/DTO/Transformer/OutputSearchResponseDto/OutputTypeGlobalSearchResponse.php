@@ -3,11 +3,12 @@
 namespace App\DTO\Transformer\OutputSearchResponseDto;
 
 use App\DTO\Response\SearchContentResponseDto;
+use App\DTO\RequestBodyParametters\RequestBody;
 
 class OutputTypeGlobalSearchResponse
 {
 
-  public $types;
+  public RequestBody $types;
   public SearchContentResponseDto $resultats;
 
 }

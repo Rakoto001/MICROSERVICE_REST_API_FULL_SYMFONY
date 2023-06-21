@@ -4,13 +4,13 @@ namespace App\DTO\RequestBodyParametters;
 
 
 
-class RequestTypeBody
+class RequestBody
 {
 
     /**
      * contenir index nresult etc
      */
     public $types;
-    public $comment;
+    public $filtres;
 
 }
