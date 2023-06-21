@@ -33,7 +33,7 @@ class ExceptionListener
     {
         $exception = $event->getThrowable();
         $request   = $event->getRequest();
-        // dd($exception->getStatusCode);
+        // dd($exception);
 
         if (in_array('application/json', $request->getAcceptableContentTypes())) {
             $response = $this->createApiResponse($exception);
@@ -49,7 +49,7 @@ class ExceptionListener
      *
      * @return ApiResponse
      */
-    private function createApiResponse(\Exception $exception)
+    private function createApiResponse($exception)
     {
         
         $statusCode = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;

@@ -2,59 +2,69 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\JoinColumn;
-use App\Repository\ProductRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * Product
+ *
+ * @ORM\Table(name="product")
+ * @ORM\Entity
  */
 class Product
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=125)
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=125, nullable=false)
      */
     private $code;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="price", type="integer", nullable=false)
      */
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products")
-     * @JoinTable(name="order_product",
-     *    joinColumns={@JoinColumn(name="product_id", referencedColumnName="id")},
-     *    inverseJoinColumns={@JoinColumn(name="order_id", referencedColumnName="id")}
-     * )
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Order", mappedBy="product")
      */
-    private $orders;
+    private $order = array();
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->orders = new ArrayCollection();
+        $this->order = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -112,15 +122,15 @@ class Product
     /**
      * @return Collection<int, Order>
      */
-    public function getOrders(): Collection
+    public function getOrder(): Collection
     {
-        return $this->orders;
+        return $this->order;
     }
 
     public function addOrder(Order $order): self
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
+        if (!$this->order->contains($order)) {
+            $this->order[] = $order;
             $order->addProduct($this);
         }
 
@@ -129,12 +139,11 @@ class Product
 
     public function removeOrder(Order $order): self
     {
-        if ($this->orders->removeElement($order)) {
+        if ($this->order->removeElement($order)) {
             $order->removeProduct($this);
         }
 
         return $this;
     }
-
 
 }

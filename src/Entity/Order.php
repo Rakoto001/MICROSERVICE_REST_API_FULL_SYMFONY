@@ -2,56 +2,73 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\OrderRepository;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=OrderRepository::class)
- * @ORM\Table(name="`order`")
+ * Order
+ *
+ * @ORM\Table(name="order", indexes={@ORM\Index(name="IDX_F52993989395C3F3", columns={"customer_id"})})
+ * @ORM\Entity
  */
 class Order
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @var datetime_immutable
+     *
+     * @ORM\Column(name="created_at", type="datetime_immutable", nullable=false)
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="text", length=0, nullable=false)
      */
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="orders")
+     * @var \Customer
+     *
+     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     * })
      */
     private $customer;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="orders")
-     * @JoinTable(name="order_product",
-     *    joinColumns={@JoinColumn(name="order_id", referencedColumnName="id")},
-     *    inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="id")}
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Product", inversedBy="order")
+     * @ORM\JoinTable(name="order_product",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *   }
      * )
      */
-    private $product;
+    private $product = array();
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->product = new ArrayCollection();
+        $this->product = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
-
 
     public function getId(): ?int
     {
@@ -117,9 +134,5 @@ class Order
 
         return $this;
     }
-
-   
-
-
 
 }

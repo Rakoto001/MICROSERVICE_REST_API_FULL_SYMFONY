@@ -30,18 +30,11 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
  */
 class UserController extends AbstractApiController
 {
-    private $orderService;
-    private $serializer;
     private $validator;
     private $userService;
     
 
-    public function __construct(OrderService $orderService,
-                                SerializerInterface $serializer,
-                                UserValidation $validator,
-                                UserService $userService) {
-        $this->orderService = $orderService;
-        $this->serializer = $serializer;
+    public function __construct( UserValidation $validator, UserService $userService) {
         $this->validator = $validator;
         $this->userService = $userService;
     }

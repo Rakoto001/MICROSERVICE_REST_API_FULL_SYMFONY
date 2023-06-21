@@ -3,55 +3,44 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinTable;
-use App\Repository\CustomerRepository;
-use JMS\Serializer\Annotation as Serializer;
-
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass=CustomerRepository::class)
+ * Customer
+ *
+ * @ORM\Table(name="customer")
+ * @ORM\Entity
  */
 class Customer
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Serializer\Groups({"app_customer"})
+     * @var int
+     *
+     * @ORM\Column(name="phone_number", type="integer", nullable=false)
      */
     private $phoneNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="customer")
-     * @ORM\JoinTable(name="order_product")
-     */
-    private $orders;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"app_read"})
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=false)
      */
     private $description;
-
-    public function __construct()
-    {
-        $this->orders = new ArrayCollection();
-    }
-
-
-   
 
     public function getId(): ?int
     {
@@ -82,36 +71,6 @@ class Customer
         return $this;
     }
 
-    /**
-     * @return Collection<int, Order>
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
-    }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getCustomer() === $this) {
-                $order->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -124,7 +83,5 @@ class Customer
         return $this;
     }
 
-  
 
-    
 }
