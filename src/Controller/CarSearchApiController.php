@@ -28,7 +28,7 @@ class CarSearchApiController extends AbstractApiController
     }
 
     /**
-     * @Rest\Post("/cars/global/search", name="api_global_search_cars")
+     * @Rest\Get("/cars/global/search", name="api_global_search_cars")
      */
     public function globalSearch(Request $request)
     {
