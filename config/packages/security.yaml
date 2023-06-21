@@ -46,8 +46,10 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/cars/global/search, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/api/user/create, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        # /cars/global/search"
 
 when@test:
     security:
