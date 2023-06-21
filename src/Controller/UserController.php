@@ -6,9 +6,9 @@ declare(strict_types = 1);
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Order;
+use App\Entity\Lenovo;
 use App\Form\UserType;
-use App\Services\OrderService;
+use App\Services\LenovoService;
 use App\DTO\Response\UserResponseDto;
 use JMS\Serializer\SerializerInterface;
 
@@ -22,7 +22,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\DTO\Transformer\UserResponseDtoTransformers;
-use App\DTO\Transformer\OrderResponseDtoTransformers;
+use App\DTO\Transformer\LenovoResponseDtoTransformers;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 

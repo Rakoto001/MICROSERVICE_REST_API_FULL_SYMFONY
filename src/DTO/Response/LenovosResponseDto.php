@@ -7,7 +7,7 @@ use App\DTO\Response\CustomersResponseDto;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Type;
 
-class OrdersResponseDto
+class LenovosResponseDto
 {
 
     /**
@@ -17,21 +17,21 @@ class OrdersResponseDto
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"read:Order"})
+     * @Serializer\Groups({"read:Lenovo"})
      * 
      */
     public string $comment;
     
     /**
      * @Serializer\Type("App\DTO\Response\CustomersResponseDto")
-     * @Serializer\Groups({"read:Order"})
+     * @Serializer\Groups({"read:Lenovo"})
      * 
      */
     public CustomersResponseDto $customer;
 
     /**
      * @Serializer\Type("array<App\DTO\Response\ProductSResponseDto>")
-     * @Serializer\Groups({"read:Order"})
+     * @Serializer\Groups({"read:Lenovo"})
      */
     public array $product;
 

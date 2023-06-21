@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Order
+ * Lenovo
  *
- * @ORM\Table(name="order", indexes={@ORM\Index(name="IDX_F52993989395C3F3", columns={"customer_id"})})
+ * @ORM\Table(name="Lenovo", indexes={@ORM\Index(name="IDX_F52993989395C3F3", columns={"customer_id"})})
  * @ORM\Entity
  */
-class Order
+class Lenovo
 {
     /**
      * @var int
@@ -53,12 +53,14 @@ class Order
      * @ORM\ManyToMany(targetEntity="Product", inversedBy="order")
      * @ORM\JoinTable(name="order_product",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="order_id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="product_id")
      *   }
      * )
+     * 
+     * 
      */
     private $product = array();
 

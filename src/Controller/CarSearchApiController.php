@@ -28,11 +28,23 @@ class CarSearchApiController extends AbstractApiController
     }
 
     /**
-     * @Rest\Get("/cars/global/search", name="api_global_search_cars")
+     * @Rest\Post("/cars/global/search", name="api_global_search_cars")
      */
     public function globalSearch(Request $request)
     {
-        dd('search');
+        $allInputParamsSearch = $request->request->all();
+        dd($allInputParamsSearch);
+//         recherche glob :
+// - reference string 
+// -marsue string 
+// - modele string 
+// motorisation string 
+// energie
+// boite de vitesse 
+// -couleur
+// - date de mise en circ DataTime
+// nombre de km intefer
+// type vendeur
        
 
     }

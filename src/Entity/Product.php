@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Product
@@ -54,7 +56,11 @@ class Product
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Order", mappedBy="product")
+     * @ORM\ManyToMany(targetEntity="Lenovo", mappedBy="product")
+     * @JoinTable(name="order_product",
+     *    joinColumns={@JoinColumn(name="product_id")},
+     *    inverseJoinColumns={@JoinColumn(name="order_id")}
+     * )
      */
     private $order = array();
 
@@ -120,14 +126,14 @@ class Product
     }
 
     /**
-     * @return Collection<int, Order>
+     * @return Collection<int, Lenovo>
      */
-    public function getOrder(): Collection
+    public function getLenovo(): Collection
     {
         return $this->order;
     }
 
-    public function addOrder(Order $order): self
+    public function addLenovo(Lenovo $order): self
     {
         if (!$this->order->contains($order)) {
             $this->order[] = $order;
@@ -137,7 +143,7 @@ class Product
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function removeLenovo(Lenovo $order): self
     {
         if ($this->order->removeElement($order)) {
             $order->removeProduct($this);

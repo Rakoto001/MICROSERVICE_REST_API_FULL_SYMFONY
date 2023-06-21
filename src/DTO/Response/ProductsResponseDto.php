@@ -9,20 +9,20 @@ class ProductsResponseDto
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"read:Order"})
+     * @Serializer\Groups({"read:Lenovo"})
      * 
      */
     public string $code;
 
     /**
      * @Serializer\Type("string")
-     * @Serializer\Groups({"read:Order"})
+     * @Serializer\Groups({"read:Lenovo"})
      */
     public string $title;
 
     /**
      * @Serializer\Type("int")
-     * @Serializer\Groups({"read:Order"})
+     * @Serializer\Groups({"read:Lenovo"})
      */
     public int $price;
 
