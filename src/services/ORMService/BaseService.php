@@ -2,9 +2,9 @@
 
 namespace App\Services\ORMService;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\DTO\RequestBodyParametters\RequestFilterContentBody;
 use App\DTO\Transformer\InputSearchTransformer\SearchFilterContentBodyDtoTransformers;
 
 class BaseService
@@ -21,7 +21,13 @@ class BaseService
         $this->sFCBody = $sFCBody;
     }
 
-   public function formalizeInput($parametters)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $parametters
+     * @return RequestFilterContentBody
+     */
+   public function formalizeInput($parametters) :RequestFilterContentBody
    {
        $oInput = $this->sFCBody->transformSearchInputFilterObject($parametters["filtres"]["marque"], 
                                                                     $parametters["filtres"]["modele"], 

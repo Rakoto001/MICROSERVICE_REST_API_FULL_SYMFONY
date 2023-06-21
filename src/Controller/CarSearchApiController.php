@@ -39,9 +39,8 @@ class CarSearchApiController extends AbstractApiController
     public function globalSearch(Request $request, SearchTypeBodyDtoTransformers $oType)
     {
         $allInputParamsSearch = $request->request->all();
-        $this->baseService->formalizeInput($allInputParamsSearch);
-
-        // $oType = $oType->transformSearchInputTypeObject(); //transformSearchInputTypeObject
+        $oInputSearch = $this->baseService->formalizeInput($allInputParamsSearch);
+        dd($oInputSearch);
         $oOutSearch = $this->rSResponse->outputGlobalSearch();
 
         
