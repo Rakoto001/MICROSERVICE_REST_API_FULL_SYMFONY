@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
+use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
 use App\DTO\Transformer\InputSearchTransformer\SearchTypeBodyDtoTransformers;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
 
@@ -24,7 +25,7 @@ class CarSearchApiController extends AbstractApiController
     private $validator;
     private $rSResponse;
 
-    public function __construct(ResultSearchResponseDtoTransformer $rSResponse)
+    public function __construct(OutputGlobalSearchResponse $rSResponse)
     {
         $this->rSResponse = $rSResponse;
     }
@@ -37,12 +38,12 @@ class CarSearchApiController extends AbstractApiController
         $allInputParamsSearch = $request->request->all();
 
         // $oType = $oType->transformSearchInputTypeObject(); //transformSearchInputTypeObject
-        $oType = $this->rSResponse->transformResultSearchResponseObject();
+        $oOutSearch = $this->rSResponse->outputGlobalSearch();
 
         
         //  tsimaintsy mi return ciew zay vo mandeha le listener
     //  * @Rest\View(serializerGroups={"api_global_search"})
-    //  return ($oType); 
-        return new JsonResponse($oType);
+    //  return ($oOutSearch); 
+        return new JSONResponse($oOutSearch);
     }
 }

@@ -9,8 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class SearchResponseDto
 {
-
-
-public SearchContentResponseDto $resultats;
+  
+  public SearchContentResponseDto $resultats;
 
 }

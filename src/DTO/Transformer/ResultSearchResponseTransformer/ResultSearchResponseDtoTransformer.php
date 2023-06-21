@@ -20,7 +20,7 @@ class ResultSearchResponseDtoTransformer
         $oRSearch = new SearchResponseDto();
         $oRSearch->resultats = $this->rSCResponse->transformResultContentSearchResponseObject();
 
-        dd($oRSearch);
+        return $oRSearch;
     }
 
 }
