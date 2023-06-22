@@ -20,7 +20,7 @@ class SearchFilterContentBodyDtoTransformers
         $oType->energie = $energie; //energie
         $oType->boiteVitesse = $boiteVitesse; 
         $oType->km = $km; 
-        $oType->dateSortie = $dateSortie instanceof DateTime ? $dateSortie : new DateTime();
+        $oType->dateSortie = $dateSortie instanceof DateTime ? $dateSortie : DateTime::createFromFormat('d/m/Y', '1/10/70');
 
         return $oType;
     }

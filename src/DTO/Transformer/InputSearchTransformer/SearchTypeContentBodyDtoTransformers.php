@@ -14,8 +14,18 @@ use App\DTO\RequestBodyParametters\RequestTypeContentBody;
 class SearchTypeContentBodyDtoTransformers extends AbstractFOSRestController
 {
 
-    public function transformSearchInputTypeObject($parametters = null)
+    /**
+     * DTO transform pour les params type input
+     *
+     * @param [type] $parametters
+     * @return RequestTypeContentBody
+     */
+    public function transformSearchInputTypeObject($index = null, $typeVendeur = null, $nombreResultats = null, $ordre = null) :RequestTypeContentBody
     {
+        // public int $index;
+        // public string $typeVendeur;
+        // public int $nombreResultats;
+        // public string $ordre;
         $oType = new RequestTypeContentBody();
         
         $oType->index = 1;

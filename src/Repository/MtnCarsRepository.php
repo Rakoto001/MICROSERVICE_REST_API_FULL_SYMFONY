@@ -3,9 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\MtnCars;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+ini_set('memory_limit', '-1');
 /**
  * @extends ServiceEntityRepository<MtnCars>
  *
@@ -48,28 +49,59 @@ class MtnCarsRepository extends ServiceEntityRepository
 
     public function findCarsByFilterParametters($oRFilters)
     {
-        // dd($oRFilters);
-    //    $query = $this->createQueryBuilder('m');
-           $results = $this->createeQuery()
-                            ->where('m.marque = :marque')
-                            ->andWhere('m.modele = :modele')
-                            ->andWhere('m.energievoiture = :energie')
-                            // ->andWhere('m.energieVoiture = :energie') nombredekmvoiture
-                            ->andWhere('m.boitedevitessevoiture IN (:bvitesse)')
-                            ->andWhere('m.nombredekmvoiture > :km') // https://stackoverflow.com/questions/37243028/doctrine-2-simple-bigger-than-criteria
+       
+        $queries = $this->createeQuery();
+                           
+                          
+                            // ->andWhere('m.nombredekmvoiture > :km'); // https://stackoverflow.com/questions/37243028/doctrine-2-simple-bigger-than-criteria
+                           
+                            if ( $oRFilters->getMarque() ) {
 
-                            ->setParameter('marque', strtolower($oRFilters->getMarque()))
-                            ->setParameter('modele', strtolower($oRFilters->getModele()))
-                            ->setParameter('energie', strtolower($oRFilters->getEnergie()))
-                            ->setParameter('bvitesse', ($oRFilters->getBoiteVitesse()))
-                            ->setParameter('km', ($oRFilters->getKm()))
+                              $queries->where('m.marque = :marque')
+                                      ->setParameter('marque', strtolower($oRFilters->getMarque()));
+                               
+                            }
+                           
+                            if ( $oRFilters->getModele() ) {
+                               
+                                $queries->andWhere('m.modele = :modele')
+                                        ->setParameter('modele', strtolower($oRFilters->getModele()));
+                                 
+                            }
 
-                            ->getQuery()
-                            ->getResult();
 
-                            dump(count($results));
+                            if ( $oRFilters->getEnergie() ) {
 
-             dd(current($results));
+                                $queries->andWhere('m.energievoiture = :energie')
+                                        ->setParameter('energie', strtolower($oRFilters->getEnergie()));
+                                 
+                            }
+
+                            if ( $oRFilters->getBoiteVitesse() ) {
+
+                                $queries->andWhere('m.boitedevitessevoiture IN (:bvitesse)')
+                                        ->setParameter('bvitesse', ($oRFilters->getBoiteVitesse()));
+                                 
+                            }
+
+                            if ( $oRFilters->getKm() ) {
+
+                                $queries->andWhere('m.nombredekmvoiture >= :km')
+                                        ->setParameter('km', ($oRFilters->getKm()));
+                                 
+                            }
+
+                            if ( $oRFilters->getDateSortie() ) {
+
+                                $queries->andWhere('m.miseencirculation >= :datesortie')
+                                        ->setParameter('datesortie', ($oRFilters->getDateSortie()));
+                                 
+                            }
+  
+
+        $results = $queries->getQuery()->getResult();
+
+        return $results;
     }
 
 //    /**

@@ -2,7 +2,7 @@
 
 namespace App\DTO\Transformer\OutputSearchResponseDto;
 
-use App\DTO\Transformer\InputSearchTransformer\SearchTypeBodyDtoTransformers;
+use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchContentResponseDtoTransformer;
 
 class OutputGlobalSearchResponse
@@ -11,7 +11,7 @@ class OutputGlobalSearchResponse
     private $contentBody;
 
     public function __construct(ResultSearchContentResponseDtoTransformer $rSCResponse,
-                                SearchTypeBodyDtoTransformers $contentBody) {
+                                SearchBodyDtoTransformers $contentBody) {
 
         $this->rSCResponse = $rSCResponse;
         $this->contentBody = $contentBody;

@@ -32,6 +32,8 @@ class MtnCarsService
     {
 
        $oCars = $this->repos->findCarsByFilterParametters($oRFilters);
+
+       return $oCars;
     }
 
 }

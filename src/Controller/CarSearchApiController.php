@@ -16,7 +16,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
-use App\DTO\Transformer\InputSearchTransformer\SearchTypeBodyDtoTransformers;
+use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
 
 /**
@@ -38,7 +38,7 @@ class CarSearchApiController extends AbstractApiController
     /**
      * @Rest\Post("/cars/global/search", name="api_global_search_cars")
      */
-    public function globalSearch(Request $request, SearchTypeBodyDtoTransformers $oType)
+    public function globalSearch(Request $request, SearchBodyDtoTransformers $oType)
     {
         $oCars = [];
         
@@ -46,7 +46,7 @@ class CarSearchApiController extends AbstractApiController
         $oInputSearch = $this->baseService->formalizeInput($allInputParamsSearch);
 
         $oCars = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
-
+dd($oCars);
         // recherche par filtre
         $oOutSearch = $this->rSResponse->outputGlobalSearch();
 

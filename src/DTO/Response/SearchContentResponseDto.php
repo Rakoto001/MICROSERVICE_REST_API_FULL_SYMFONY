@@ -10,18 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SearchContentResponseDto
 {
 
-  // "resultats" : {
-  //   "reference" ou "uuid"
-  //   "marque" : "",
-  //   "modele": "",
-  //   "boiteDeVitesse",
-  //   "nombrePlace"
-  //   "miseEnCirculation",
-  //   "km": ,
-  //   "photos",
-  //   "prix",
-  //   "",
-
   const SELLER_TYPE = [
     'amator' => 'amateur',
     'pro' => 'professionnel'

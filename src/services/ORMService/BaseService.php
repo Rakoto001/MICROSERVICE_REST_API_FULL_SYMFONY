@@ -2,23 +2,25 @@
 
 namespace App\Services\ORMService;
 
+use DateTime;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\DTO\RequestBodyParametters\RequestFilterContentBody;
+use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\InputSearchTransformer\SearchFilterContentBodyDtoTransformers;
 
 class BaseService
 {
     private $manager;
     private $repos;
-    private $sFCBody;
+    private $searchBody;
 
     public function __construct(EntityManagerInterface $manager, 
                                 UserRepository $repos,
-                                SearchFilterContentBodyDtoTransformers $sFCBody) {
+                                SearchBodyDtoTransformers $searchBody) {
         $this->manager = $manager;
         $this->repos = $repos;
-        $this->sFCBody = $sFCBody;
+        $this->searchBody = $searchBody;
     }
 
     /**
@@ -27,15 +29,27 @@ class BaseService
      * @param [type] $parametters
      * @return RequestFilterContentBody
      */
-   public function formalizeInput($parametters) :RequestFilterContentBody
+   public function formalizeInput($parametters)
    {
-       $oInput = $this->sFCBody->transformSearchInputFilterObject($parametters["filtres"]["marque"], 
+       dd($parametters);
+    
+       $dateSortieInput = $parametters["filtres"]["dateSortie"] ? DateTime::createFromFormat('d/m/Y', '1/10/'.$parametters["filtres"]["dateSortie"]) : "";
+
+       $this->searchBody->transformSearchInputTypeObject($parametters["filtres"]["marque"], 
                                                                     $parametters["filtres"]["modele"], 
                                                                     $parametters["filtres"]["energie"], 
                                                                     $parametters["filtres"]["boiteVitesse"], 
                                                                     $parametters["filtres"]["km"],
-                                                                    $parametters["filtres"]["dateSortie"]
-                                                                );
+                                                                    $dateSortieInput
+);
+       // SearchBodyDtoTransformers
+    //    $oInput = $this->sFCBody->transformSearchInputFilterObject($parametters["filtres"]["marque"], 
+    //                                                                 $parametters["filtres"]["modele"], 
+    //                                                                 $parametters["filtres"]["energie"], 
+    //                                                                 $parametters["filtres"]["boiteVitesse"], 
+    //                                                                 $parametters["filtres"]["km"],
+    //                                                                 $dateSortieInput
+    //                                                             );
 
        return $oInput;
    }
