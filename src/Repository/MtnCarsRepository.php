@@ -39,6 +39,39 @@ class MtnCarsRepository extends ServiceEntityRepository
         }
     }
 
+    public function createeQuery()
+    {
+        return $this->createQueryBuilder('m');
+    }
+
+
+
+    public function findCarsByFilterParametters($oRFilters)
+    {
+        // dd($oRFilters);
+    //    $query = $this->createQueryBuilder('m');
+           $results = $this->createeQuery()
+                            ->where('m.marque = :marque')
+                            ->andWhere('m.modele = :modele')
+                            ->andWhere('m.energievoiture = :energie')
+                            // ->andWhere('m.energieVoiture = :energie') nombredekmvoiture
+                            ->andWhere('m.boitedevitessevoiture IN (:bvitesse)')
+                            ->andWhere('m.nombredekmvoiture > :km') // https://stackoverflow.com/questions/37243028/doctrine-2-simple-bigger-than-criteria
+
+                            ->setParameter('marque', strtolower($oRFilters->getMarque()))
+                            ->setParameter('modele', strtolower($oRFilters->getModele()))
+                            ->setParameter('energie', strtolower($oRFilters->getEnergie()))
+                            ->setParameter('bvitesse', ($oRFilters->getBoiteVitesse()))
+                            ->setParameter('km', ($oRFilters->getKm()))
+
+                            ->getQuery()
+                            ->getResult();
+
+                            dump(count($results));
+
+             dd(current($results));
+    }
+
 //    /**
 //     * @return MtnCars[] Returns an array of MtnCars objects
 //     */

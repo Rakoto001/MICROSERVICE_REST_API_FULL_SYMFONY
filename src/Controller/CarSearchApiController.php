@@ -7,6 +7,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 
+use App\Services\ORMService\BaseService;
+use App\Services\ORMService\MtnCarsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,21 +18,21 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
 use App\DTO\Transformer\InputSearchTransformer\SearchTypeBodyDtoTransformers;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
-use App\Services\ORMService\BaseService;
 
 /**
  * @Route("/api", name="api_")
  */
 class CarSearchApiController extends AbstractApiController
 {
-    private $validator;
     private $rSResponse;
     private $baseService;
+    private $mtnService;
 
-    public function __construct(OutputGlobalSearchResponse $rSResponse, BaseService $baseService)
+    public function __construct(OutputGlobalSearchResponse $rSResponse, BaseService $baseService, MtnCarsService $mtnService)
     {
         $this->rSResponse = $rSResponse;
         $this->baseService = $baseService;
+        $this->mtnService = $mtnService;
     }
 
     /**
@@ -38,9 +40,14 @@ class CarSearchApiController extends AbstractApiController
      */
     public function globalSearch(Request $request, SearchTypeBodyDtoTransformers $oType)
     {
+        $oCars = [];
+        
         $allInputParamsSearch = $request->request->all();
         $oInputSearch = $this->baseService->formalizeInput($allInputParamsSearch);
-        dd($oInputSearch);
+
+        $oCars = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
+
+        // recherche par filtre
         $oOutSearch = $this->rSResponse->outputGlobalSearch();
 
         
