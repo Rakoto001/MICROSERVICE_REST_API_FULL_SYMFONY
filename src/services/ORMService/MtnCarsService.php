@@ -3,10 +3,11 @@
 namespace App\Services\ORMService;
 
 use App\Entity\User;
+use App\Entity\MtnCars;
 use App\Repository\MtnCarsRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\DTO\RequestBodyParametters\RequestBody;
 use App\DTO\RequestBodyParametters\RequestFilterContentBody;
-use App\Entity\MtnCars;
 
 class MtnCarsService
 {
@@ -17,18 +18,15 @@ class MtnCarsService
         $this->manager = $manager;
         $this->repos = $repos;
     }
-   
 
-    // public function insertUser(User $user)
-    // {
-   
-    //     $this->repos->add($user, true);
 
-    //    return true;
-        
-    // }
-
-    public function makeSearchByFilterParametters(RequestFilterContentBody $oRFilters)
+    /**
+     * recherche par le RequestBody filtre et type
+     *
+     * @param RequestBody $oRFilters
+     * @return void
+     */
+    public function makeSearchByFilterParametters(RequestBody $oRFilters)
     {
 
        $oCars = $this->repos->findCarsByFilterParametters($oRFilters);

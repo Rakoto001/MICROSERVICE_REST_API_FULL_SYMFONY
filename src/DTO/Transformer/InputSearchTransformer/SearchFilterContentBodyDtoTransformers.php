@@ -11,10 +11,20 @@ use DateTime;
 class SearchFilterContentBodyDtoTransformers
 {
 
+    /**
+     * input Type search transformer
+     *
+     * @param [type] $marque
+     * @param [type] $modele
+     * @param [type] $energie
+     * @param [type] $boiteVitesse
+     * @param [type] $km
+     * @param [type] $dateSortie
+     * @return void
+     */
     public function transformSearchInputFilterObject($marque = null, $modele = null, $energie = null, $boiteVitesse = null, $km =null, $dateSortie = null)
     {
         $oType = new RequestFilterContentBody();
-    
         $oType->marque = $marque;
         $oType->modele = $modele; //energie
         $oType->energie = $energie; //energie

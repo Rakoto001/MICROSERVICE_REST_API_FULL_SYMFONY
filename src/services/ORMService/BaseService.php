@@ -5,6 +5,7 @@ namespace App\Services\ORMService;
 use DateTime;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\DTO\RequestBodyParametters\RequestBody;
 use App\DTO\RequestBodyParametters\RequestFilterContentBody;
 use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\InputSearchTransformer\SearchFilterContentBodyDtoTransformers;
@@ -29,18 +30,23 @@ class BaseService
      * @param [type] $parametters
      * @return RequestFilterContentBody
      */
-   public function formalizeInput($parametters)
+   public function formalizeInput(array $parametters) :RequestBody
    {
-       dd($parametters);
+    //    dd(($parametters["filtres"]["marque"]));
     
        $dateSortieInput = $parametters["filtres"]["dateSortie"] ? DateTime::createFromFormat('d/m/Y', '1/10/'.$parametters["filtres"]["dateSortie"]) : "";
 
-       $this->searchBody->transformSearchInputTypeObject($parametters["filtres"]["marque"], 
+       $oInput = $this->searchBody->transformSearchInputObject($parametters["filtres"]["marque"], 
                                                                     $parametters["filtres"]["modele"], 
                                                                     $parametters["filtres"]["energie"], 
                                                                     $parametters["filtres"]["boiteVitesse"], 
                                                                     $parametters["filtres"]["km"],
-                                                                    $dateSortieInput
+                                                                    $dateSortieInput,
+                                                                    $parametters["types"]["index"],
+                                                                    $parametters["types"]["typeVendeur"],
+                                                                    $parametters["types"]["nombreResultats"],
+                                                                    $parametters["types"]["ordre"]
+
 );
        // SearchBodyDtoTransformers
     //    $oInput = $this->sFCBody->transformSearchInputFilterObject($parametters["filtres"]["marque"], 
@@ -50,6 +56,7 @@ class BaseService
     //                                                                 $parametters["filtres"]["km"],
     //                                                                 $dateSortieInput
     //                                                             );
+
 
        return $oInput;
    }

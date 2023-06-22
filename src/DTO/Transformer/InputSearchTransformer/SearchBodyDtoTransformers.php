@@ -24,7 +24,7 @@ class SearchBodyDtoTransformers extends AbstractFOSRestController
         $this->contentFilter = $contentFilter;
     }
 
-    public function transformSearchInputTypeObject(
+    public function transformSearchInputObject(
         $marque = null, 
         $modele = null, 
         $energie = null, 
@@ -41,7 +41,7 @@ class SearchBodyDtoTransformers extends AbstractFOSRestController
         $oType = new RequestBody();
         
         $oType->types = $this->contentType->transformSearchInputTypeObject($index = null, $typeVendeur = null, $nombreResultats = null, $ordre = null);
-        $oType->filtres = $this->contentFilter->transformSearchInputFilterObject($marque = null, $modele = null, $energie = null, $boiteVitesse = null, $km =null, $dateSortie = null); //transformSearchInputFilterObject
+        $oType->filtres = $this->contentFilter->transformSearchInputFilterObject($marque, $modele, $energie, $boiteVitesse, $km , $dateSortie); //transformSearchInputFilterObject
 
         return $oType;
     }
