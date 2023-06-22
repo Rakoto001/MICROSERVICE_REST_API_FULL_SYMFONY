@@ -12,6 +12,6 @@ class SearchResponseDto
 {
   
   public SearchPropertiesResponseDto $proprietes;
-  public SearchContentResponseDto $resultats;
+  public array $resultats;
 
 }

@@ -49,7 +49,6 @@ class CarSearchApiController extends AbstractApiController
         // recherche par filtre
         // dd(next($oCars));
         $oOutSearch = $this->rSResponse->transformResultSearchResponseObject($oCars);
-        dd(($oOutSearch));
 
         
         //  tsimaintsy mi return ciew zay vo mandeha le listener
