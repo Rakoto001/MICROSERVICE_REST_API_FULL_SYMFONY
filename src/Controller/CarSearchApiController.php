@@ -46,7 +46,7 @@ class CarSearchApiController extends AbstractApiController
         $oInputSearch = $this->baseService->formalizeInput($allInputParamsSearch);
 
         $oCars = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
-dd($oCars);
+dd(next($oCars));
         // recherche par filtre
         $oOutSearch = $this->rSResponse->outputGlobalSearch();
 

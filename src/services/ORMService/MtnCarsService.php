@@ -26,7 +26,7 @@ class MtnCarsService
      * @param RequestBody $oRFilters
      * @return void
      */
-    public function makeSearchByFilterParametters(RequestBody $oRFilters)
+    public function makeSearchByFilterParametters($oRFilters)
     {
 
        $oCars = $this->repos->findCarsByFilterParametters($oRFilters);

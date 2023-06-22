@@ -37,7 +37,6 @@ class SearchBodyDtoTransformers extends AbstractFOSRestController
         $ordre = null
     )
     {
-
         $oType = new RequestBody();
         
         $oType->types = $this->contentType->transformSearchInputTypeObject($index = null, $typeVendeur = null, $nombreResultats = null, $ordre = null);

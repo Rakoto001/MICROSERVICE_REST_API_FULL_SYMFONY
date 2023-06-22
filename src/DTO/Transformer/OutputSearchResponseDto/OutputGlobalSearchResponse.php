@@ -7,23 +7,29 @@ use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchContentRespo
 
 class OutputGlobalSearchResponse
 {
-    private $rSCResponse;
+    private $rSCResponseContent;
     private $contentBody;
 
-    public function __construct(ResultSearchContentResponseDtoTransformer $rSCResponse,
+    public function __construct(ResultSearchContentResponseDtoTransformer $rSCResponseContent,
                                 SearchBodyDtoTransformers $contentBody) {
 
-        $this->rSCResponse = $rSCResponse;
+        $this->rSCResponseContent = $rSCResponseContent;
         $this->contentBody = $contentBody;
 
     }
 
+    /**
+     * sortie de larecherche globale
+     *
+     * @return void
+     */
     public function outputGlobalSearch()
     {
 
         $oOutputSearch = new OutputTypeGlobalSearchResponse();
-        $oOutputSearch->types = $this->contentBody->transformSearchInputTypeObject();
-        $oOutputSearch->resultats = $this->rSCResponse->transformResultContentSearchResponseObject();
+
+        $oOutputSearch->types = $this->contentBody->transformSearchInputObject();
+        $oOutputSearch->resultats = $this->rSCResponseContent->transformResultContentSearchResponseObject();
 
         return $oOutputSearch;
     }

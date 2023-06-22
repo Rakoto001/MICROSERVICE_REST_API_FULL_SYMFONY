@@ -55,46 +55,46 @@ class MtnCarsRepository extends ServiceEntityRepository
                           
                             // ->andWhere('m.nombredekmvoiture > :km'); // https://stackoverflow.com/questions/37243028/doctrine-2-simple-bigger-than-criteria
                            
-                            if ( $oRFilters->getMarque() ) {
+                            if ( $oRFilters->filtres->getMarque() ) {
 
                               $queries->where('m.marque = :marque')
-                                      ->setParameter('marque', strtolower($oRFilters->getMarque()));
+                                      ->setParameter('marque', strtolower($oRFilters->filtres->getMarque()));
                                
                             }
                            
-                            if ( $oRFilters->getModele() ) {
+                            if ( $oRFilters->filtres->getModele() ) {
                                
                                 $queries->andWhere('m.modele = :modele')
-                                        ->setParameter('modele', strtolower($oRFilters->getModele()));
+                                        ->setParameter('modele', strtolower($oRFilters->filtres->getModele()));
                                  
                             }
 
 
-                            if ( $oRFilters->getEnergie() ) {
+                            if ( $oRFilters->filtres->getEnergie() ) {
 
                                 $queries->andWhere('m.energievoiture = :energie')
-                                        ->setParameter('energie', strtolower($oRFilters->getEnergie()));
+                                        ->setParameter('energie', strtolower($oRFilters->filtres->getEnergie()));
                                  
                             }
 
-                            if ( $oRFilters->getBoiteVitesse() ) {
+                            if ( $oRFilters->filtres->getBoiteVitesse() ) {
 
                                 $queries->andWhere('m.boitedevitessevoiture IN (:bvitesse)')
-                                        ->setParameter('bvitesse', ($oRFilters->getBoiteVitesse()));
+                                        ->setParameter('bvitesse', ($oRFilters->filtres->getBoiteVitesse()));
                                  
                             }
 
-                            if ( $oRFilters->getKm() ) {
+                            if ( $oRFilters->filtres->getKm() ) {
 
                                 $queries->andWhere('m.nombredekmvoiture >= :km')
-                                        ->setParameter('km', ($oRFilters->getKm()));
+                                        ->setParameter('km', ($oRFilters->filtres->getKm()));
                                  
                             }
 
-                            if ( $oRFilters->getDateSortie() ) {
+                            if ( $oRFilters->filtres->getDateSortie() ) {
 
                                 $queries->andWhere('m.miseencirculation >= :datesortie')
-                                        ->setParameter('datesortie', ($oRFilters->getDateSortie()));
+                                        ->setParameter('datesortie', ($oRFilters->filtres->getDateSortie()));
                                  
                             }
   
