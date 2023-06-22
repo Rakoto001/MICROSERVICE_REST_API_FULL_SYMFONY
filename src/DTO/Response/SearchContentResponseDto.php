@@ -18,7 +18,7 @@ class SearchContentResponseDto
   public string $reference;
   public string $marque;
   public string $modele;
-  public array $boiteDeVitesse;
+  public string $boiteDeVitesse;
   public int $nombrePlace;
   public DateTime $miseEnCirculation;
   public string $km;

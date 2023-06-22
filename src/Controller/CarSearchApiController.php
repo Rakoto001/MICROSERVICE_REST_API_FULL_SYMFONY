@@ -28,7 +28,7 @@ class CarSearchApiController extends AbstractApiController
     private $baseService;
     private $mtnService;
 
-    public function __construct(OutputGlobalSearchResponse $rSResponse, BaseService $baseService, MtnCarsService $mtnService)
+    public function __construct(ResultSearchResponseDtoTransformer $rSResponse, BaseService $baseService, MtnCarsService $mtnService)
     {
         $this->rSResponse = $rSResponse;
         $this->baseService = $baseService;
@@ -46,9 +46,10 @@ class CarSearchApiController extends AbstractApiController
         $oInputSearch = $this->baseService->formalizeInput($allInputParamsSearch);
 
         $oCars = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
-dd(next($oCars));
         // recherche par filtre
-        $oOutSearch = $this->rSResponse->outputGlobalSearch();
+        // dd(next($oCars));
+        $oOutSearch = $this->rSResponse->transformResultSearchResponseObject($oCars);
+        dd(($oOutSearch));
 
         
         //  tsimaintsy mi return ciew zay vo mandeha le listener

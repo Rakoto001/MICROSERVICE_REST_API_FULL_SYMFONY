@@ -4,6 +4,7 @@ namespace App\DTO\Transformer\ResultSearchResponseTransformer;
 
 use App\DTO\Response\SearchResponseDto;
 use App\DTO\Response\SearchContentResponseDto;
+use App\Entity\MtnCars;
 use DateTime;
 
 class ResultSearchContentResponseDtoTransformer
@@ -12,41 +13,41 @@ class ResultSearchContentResponseDtoTransformer
         // $this->var = $var;
     }
 
-    public function transformResultContentSearchResponseObject()
+    /**
+     * iteration sur les resultats des requetes et les modifients en tant que objet output body
+     *
+     * @param array $aResultFromDB
+     * @return void
+     */
+    public function transformAllResultContentSearchResponseObject($aResultFromDB = [])
+    {
+        $aOCars = [];
+        foreach ($aResultFromDB as $key => $oCar) {
+            # code...
+            $aOCars [] = $this->transformResultContentSearchResponseObject($oCar);
+        }
+
+        return $aOCars;
+    }
+
+    /**
+     * creation nw Objet du body result content
+     *
+     * @return void
+     */
+    public function transformResultContentSearchResponseObject(MtnCars $oCar)
     {
         $oRTypeSearch = new SearchContentResponseDto();
         
-        $oRTypeSearch->marque = "Citroen";
-        $oRTypeSearch->modele = "WWW";
-        $oRTypeSearch->boiteDeVitesse = ["automatique", "manuelle"];
-        $oRTypeSearch->miseEnCirculation = new DateTime();
-        $oRTypeSearch->photos = "Citroen";
-        $oRTypeSearch->prix = "300";
+        $oRTypeSearch->reference = $oCar->getReference(); //
+        $oRTypeSearch->marque = $oCar->getMarque(); //
+        $oRTypeSearch->modele = $oCar->getModele();
+        $oRTypeSearch->boiteDeVitesse = $oCar->getBoitedevitessevoiture();
+        $oRTypeSearch->miseEnCirculation = $oCar->getMiseencirculation();
+        $oRTypeSearch->photos = $oCar->getPhotominiature();
+        $oRTypeSearch->prix = $oCar->getPrixvoiture();
 
         return $oRTypeSearch;
-
-        // $oRTypeSearch->nombrePlace = 3;
-        // $oRTypeSearch->marque = "Citroen";
-        // $oRTypeSearch->marque = "Citroen";
-        // $oRTypeSearch->marque = "Citroen";
-
-
-//         public string $reference;
-//   public string $marque;
-//   public string $modele;
-//   public array $boiteDeVitesse;
-//   public int $nombrePlace;
-//   public DateTime $miseEnCirculation;
-//   public string $km;
-//   public string $photos;
-//   public int $prix;
-//   public string $vendeur;
-  
-//   public function __construct() {
-//     $this->nombrePlace = null;
-//     $this->km = 0;
-//     $this->vendeur = SearchContentResponseDto::SELLER_TYPE['amator'];
-//   }
     }
 
 }
