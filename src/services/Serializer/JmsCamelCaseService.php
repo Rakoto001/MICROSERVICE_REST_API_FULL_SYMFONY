@@ -40,10 +40,8 @@ class JmsCamelCaseService implements Serializer
      */
     public function serialize($data, string $format, Context $context)
     {
-        dd('inside');
        $jmsContext = $this->getJmsContext($context);
-
-      $results = ($this->serializer->serialize($data, $format, $jmsContext));
+       $results = ($this->serializer->serialize($data, $format, $jmsContext));
 
       return $results;
 

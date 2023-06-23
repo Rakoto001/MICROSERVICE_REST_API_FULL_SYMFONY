@@ -45,6 +45,8 @@ class ResultSearchContentResponseDtoTransformer
         $oRTypeSearch->boiteDeVitesse = $oCar->getBoitedevitessevoiture();
         $oRTypeSearch->miseEnCirculation = $oCar->getMiseencirculation();
         $oRTypeSearch->photos = $oCar->getPhotominiature();
+        $oRTypeSearch->km = $oCar->getNombredekmvoiture();
+        $oRTypeSearch->nombrePlace = $oCar->getNombredeportes();
         $oRTypeSearch->prix = $oCar->getPrixvoiture();
 
         return $oRTypeSearch;

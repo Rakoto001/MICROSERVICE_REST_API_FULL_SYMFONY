@@ -37,6 +37,7 @@ class CarSearchApiController extends AbstractApiController
 
     /**
      * @Rest\Post("/cars/global/search", name="api_global_search_cars")
+     * @Rest\View(serializerGroups={"api_global_search"})
      */
     public function globalSearch(Request $request, SearchBodyDtoTransformers $oType)
     {
@@ -53,13 +54,7 @@ class CarSearchApiController extends AbstractApiController
         
         //  tsimaintsy mi return ciew zay vo mandeha le listener
     //  * @Rest\View(serializerGroups={"api_global_search"})
-    //  return ($oOutSearch); 
-
-                // "marque": "",
-                // "modele": "",
-                // "boiteVitesse": [""],
-                // "km": 0,
-                // "dateSortie": ""
+        // return $oOutSearch;
         return new JSONResponse($oOutSearch);
     }
 }

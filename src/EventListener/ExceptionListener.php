@@ -31,14 +31,13 @@ class ExceptionListener
      */
     public function onKernelException(ExceptionEvent  $event)
     {
-        // $exception = $event->getThrowable();
-        // $request   = $event->getRequest();
-        // dd($exception);
+        $exception = $event->getThrowable();
+        $request   = $event->getRequest();
 
-        // if (in_array('application/json', $request->getAcceptableContentTypes())) {
-        //     $response = $this->createApiResponse($exception);
-        //     $event->setResponse($response);
-        // }
+        if (in_array('application/json', $request->getAcceptableContentTypes())) {
+            $response = $this->createApiResponse($exception);
+            $event->setResponse($response);
+        }
 
     }
 
