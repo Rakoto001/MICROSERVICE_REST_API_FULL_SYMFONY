@@ -2,10 +2,11 @@
 
 namespace App\DTO\Transformer\ResultSearchResponseTransformer;
 
+use DateTime;
+use App\Entity\MtnCars;
+use App\Entity\MatrixCars;
 use App\DTO\Response\SearchResponseDto;
 use App\DTO\Response\SearchContentResponseDto;
-use App\Entity\MtnCars;
-use DateTime;
 
 class ResultSearchContentResponseDtoTransformer
 {
@@ -35,19 +36,40 @@ class ResultSearchContentResponseDtoTransformer
      *
      * @return void
      */
-    public function transformResultContentSearchResponseObject(MtnCars $oCar)
+    public function transformResultContentSearchResponseObject($oCar)
     {
         $oRTypeSearch = new SearchContentResponseDto();
+
+        if ( $oCar instanceof MtnCars ) {
+
+            $oRTypeSearch->reference = $oCar->getReference(); //
+            $oRTypeSearch->marque = $oCar->getMarque(); //
+            $oRTypeSearch->modele = $oCar->getModele();
+            $oRTypeSearch->boiteDeVitesse = $oCar->getBoitedevitessevoiture();
+            $oRTypeSearch->miseEnCirculation = $oCar->getMiseencirculation();
+            $oRTypeSearch->photos = $oCar->getPhotominiature();
+            $oRTypeSearch->km = $oCar->getNombredekmvoiture();
+            $oRTypeSearch->nombrePlace = $oCar->getNombredeportes();
+            $oRTypeSearch->prix = $oCar->getPrixvoiture();
+
+        } 
+
+        if ( $oCar instanceof MatrixCars ) {
+
+            $oRTypeSearch->reference = $oCar->getReference(); //
+            $oRTypeSearch->marque = $oCar->geTbrandIndex(); //
+            $oRTypeSearch->modele = $oCar->getModelIndex();
+            $oRTypeSearch->boiteDeVitesse = "a faire";
+            $oRTypeSearch->miseEnCirculation = new DateTime();
+            $oRTypeSearch->photos = "null";
+            $oRTypeSearch->km = 0;
+            $oRTypeSearch->nombrePlace = 1;
+            $oRTypeSearch->prix = 200;
+
+
+        }
         
-        $oRTypeSearch->reference = $oCar->getReference(); //
-        $oRTypeSearch->marque = $oCar->getMarque(); //
-        $oRTypeSearch->modele = $oCar->getModele();
-        $oRTypeSearch->boiteDeVitesse = $oCar->getBoitedevitessevoiture();
-        $oRTypeSearch->miseEnCirculation = $oCar->getMiseencirculation();
-        $oRTypeSearch->photos = $oCar->getPhotominiature();
-        $oRTypeSearch->km = $oCar->getNombredekmvoiture();
-        $oRTypeSearch->nombrePlace = $oCar->getNombredeportes();
-        $oRTypeSearch->prix = $oCar->getPrixvoiture();
+       
 
         return $oRTypeSearch;
     }

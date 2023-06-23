@@ -18,6 +18,7 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
 use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
+use App\Services\ORMService\MatrixCarsService;
 
 /**
  * @Route("/api", name="api_")
@@ -27,12 +28,18 @@ class CarSearchApiController extends AbstractApiController
     private $rSResponse;
     private $baseService;
     private $mtnService;
+    private $matrixService;
 
-    public function __construct(ResultSearchResponseDtoTransformer $rSResponse, BaseService $baseService, MtnCarsService $mtnService)
+    public function __construct(ResultSearchResponseDtoTransformer $rSResponse,
+                                BaseService $baseService,
+                                MtnCarsService $mtnService,
+                                MatrixCarsService $matrixService
+                                )
     {
         $this->rSResponse = $rSResponse;
         $this->baseService = $baseService;
         $this->mtnService = $mtnService;
+        $this->matrixService = $matrixService;
     }
 
     /**
@@ -46,15 +53,20 @@ class CarSearchApiController extends AbstractApiController
         $allInputParamsSearch = $request->request->all();
         $oInputSearch = $this->baseService->formalizeInput($allInputParamsSearch);
 
-        $oCars = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
-        // recherche par filtre
-        // dd(next($oCars));
-        $oOutSearch = $this->rSResponse->transformResultSearchResponseObject($oCars);
+        // Recherche pour MtnCars
+        // $oMtnOutSearch = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
+
+        // Recherche pour MatrixCars
+        $oMatrixOutSearch = $this->matrixService->makeSearchByFilterParametters($oInputSearch);
+// dd($oMatrixOutSearch);
+        // recherche par filtre oMtnOutSearch
+        // $oCars = $this->rSResponse->transformResultSearchResponseObject($oMtnOutSearch);
+        $oCars = $this->rSResponse->transformResultSearchResponseObject($oMatrixOutSearch);
 
         
         //  tsimaintsy mi return ciew zay vo mandeha le listener
     //  * @Rest\View(serializerGroups={"api_global_search"})
         // return $oOutSearch;
-        return new JSONResponse($oOutSearch);
+        return new JSONResponse($oCars);
     }
 }
