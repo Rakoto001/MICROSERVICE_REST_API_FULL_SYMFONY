@@ -38,6 +38,7 @@ class ResultSearchContentResponseDtoTransformer
      */
     public function transformResultContentSearchResponseObject($oCar)
     {
+        // dd($oCar);
         $oRTypeSearch = new SearchContentResponseDto();
 
         if ( $oCar instanceof MtnCars ) {
@@ -53,17 +54,18 @@ class ResultSearchContentResponseDtoTransformer
             $oRTypeSearch->prix = $oCar->getPrixvoiture();
 
         } 
-else {
+
+        if ( $oCar instanceof MatrixCars ) {
 
             $oRTypeSearch->reference = $oCar->getReference(); //
             $oRTypeSearch->marque = $oCar->geTbrandIndex(); //
             $oRTypeSearch->modele = $oCar->getModelIndex();
             $oRTypeSearch->boiteDeVitesse =  $oCar->getVehicule()->getGearbox();
             $oRTypeSearch->miseEnCirculation = $oCar->getPublicationDate();
-            $oRTypeSearch->photos = $oCar->getEmail(); // par défaut aucune infos sur  photos, remplacé par mail
-            $oRTypeSearch->km = 0;
-            $oRTypeSearch->nombrePlace = 1;
-            $oRTypeSearch->prix = 200;
+            $oRTypeSearch->photos = $oCar->getVehicule()->getColor(); // par défaut aucune infos sur  photos, remplacé par mail
+            $oRTypeSearch->km = $oCar->getVehicule()->getKilometers();
+            $oRTypeSearch->nombrePlace = $oCar->getSeats();
+            $oRTypeSearch->prix = $oCar->getVehicule()->getPrice();
 
 
         }

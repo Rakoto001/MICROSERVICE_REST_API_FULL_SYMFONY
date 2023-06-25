@@ -54,7 +54,7 @@ class MatrixCarsRepository extends ServiceEntityRepository
        
         $queries = $this->createeQuery();
         // 23 results
-
+        /** old query sans resultats des table de jointure*/
         // $queries->innerJoin(Vehicule::class, 'v', 'WITH', 'v.id = x.vehiculeId')
         //          ->addSelect('v')
         //          ->innerJoin(Energy::class, 'e', 'WITH', 'e.id = v.energyId')
@@ -111,8 +111,9 @@ class MatrixCarsRepository extends ServiceEntityRepository
                             }
   
 
-        $results = $queries->getQuery()->getArrayResult();
-dd(current($results));
+        $results = $queries->getQuery()->getResult();
+
+
         return $results;
     }
 
