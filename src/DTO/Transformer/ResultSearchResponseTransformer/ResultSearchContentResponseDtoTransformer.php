@@ -53,15 +53,14 @@ class ResultSearchContentResponseDtoTransformer
             $oRTypeSearch->prix = $oCar->getPrixvoiture();
 
         } 
-
-        if ( $oCar instanceof MatrixCars ) {
+else {
 
             $oRTypeSearch->reference = $oCar->getReference(); //
             $oRTypeSearch->marque = $oCar->geTbrandIndex(); //
             $oRTypeSearch->modele = $oCar->getModelIndex();
-            $oRTypeSearch->boiteDeVitesse = "a faire";
-            $oRTypeSearch->miseEnCirculation = new DateTime();
-            $oRTypeSearch->photos = "null";
+            $oRTypeSearch->boiteDeVitesse =  $oCar->getVehicule()->getGearbox();
+            $oRTypeSearch->miseEnCirculation = $oCar->getPublicationDate();
+            $oRTypeSearch->photos = $oCar->getEmail(); // par défaut aucune infos sur  photos, remplacé par mail
             $oRTypeSearch->km = 0;
             $oRTypeSearch->nombrePlace = 1;
             $oRTypeSearch->prix = 200;

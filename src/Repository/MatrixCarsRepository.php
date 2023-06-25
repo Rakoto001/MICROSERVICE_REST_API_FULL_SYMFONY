@@ -53,11 +53,17 @@ class MatrixCarsRepository extends ServiceEntityRepository
     {
        
         $queries = $this->createeQuery();
+        // 23 results
 
-        $queries->join(Vehicule::class, 'v', 'WITH', 'v.id = x.vehiculeId')
-                 ->addSelect('v')
-                 ->join(Energy::class, 'e', 'WITH', 'e.id = v.energyId')
-                 ->addSelect('e');
+        // $queries->innerJoin(Vehicule::class, 'v', 'WITH', 'v.id = x.vehiculeId')
+        //          ->addSelect('v')
+        //          ->innerJoin(Energy::class, 'e', 'WITH', 'e.id = v.energyId')
+        //          ->addSelect('e');
+
+        $queries->join('x.vehicule', 'v')
+                ->addSelect('v')
+                ->join('v.energy', 'e')
+                ->addSelect('e');
                            
                             if ( $oRFilters->filtres->getMarque() ) {
 
@@ -105,8 +111,8 @@ class MatrixCarsRepository extends ServiceEntityRepository
                             }
   
 
-        $results = $queries->getQuery()->getResult();
-
+        $results = $queries->getQuery()->getArrayResult();
+dd(current($results));
         return $results;
     }
 

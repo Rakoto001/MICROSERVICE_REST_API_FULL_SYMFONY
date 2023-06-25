@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Vehicule
  *
- * @ORM\Table(name="vehicule")
+ * @ORM\Table(name="vehicule", indexes={@ORM\Index(name="IDX_292FFF1D44F5D008", columns={"brand_id"}), @ORM\Index(name="IDX_292FFF1D7975B7E7", columns={"model_id"}), @ORM\Index(name="IDX_292FFF1DEDDF52D", columns={"energy_id"})})
  * @ORM\Entity
  */
 class Vehicule
@@ -111,11 +111,6 @@ class Vehicule
      * @ORM\Column(name="dispo_date", type="datetime", nullable=false)
      */
     private $dispoDate;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Energy::class, inversedBy="vehicules")
-     */
-    private $energy;
 
     public function getId(): ?int
     {
@@ -274,18 +269,6 @@ class Vehicule
     public function setDispoDate(\DateTimeInterface $dispoDate): self
     {
         $this->dispoDate = $dispoDate;
-
-        return $this;
-    }
-
-    public function getEnergy(): ?Energy
-    {
-        return $this->energy;
-    }
-
-    public function setEnergy(?Energy $energy): self
-    {
-        $this->energy = $energy;
 
         return $this;
     }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MatrixCars
  *
- * @ORM\Table(name="matrix_cars")
+ * @ORM\Table(name="matrix_cars", indexes={@ORM\Index(name="IDX_31A5A9C04A4A3511", columns={"vehicule_id"})})
  * @ORM\Entity
  */
 class MatrixCars
@@ -34,13 +34,6 @@ class MatrixCars
      * @ORM\Column(name="vehicule_id", type="integer", nullable=true)
      */
     private $vehiculeId;
-
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Vehicule",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="vehicule_id", referencedColumnName="id", nullable=true)
-     */
-    protected $vehicule;
 
     /**
      * @var int|null
@@ -199,36 +192,16 @@ class MatrixCars
         return $this;
     }
 
-  /**
-     * Get vehicle
-     *
-     * @return Vehicule
-     */
-    public function getVehicule()
-    {
-        return $this->vehicule;
-    }
-
-    /**
-     * Set vehicle
-     *
-     * @param Vehicule $vehicule
-     */
-    public function setVehicule(Vehicule $vehicule = null)
-    {
-        $this->vehicule = $vehicule;
-
-        return $this;
-    }
-
-    public function getIdVehicule()
+    public function getVehiculeId(): ?int
     {
         return $this->vehiculeId;
     }
 
-    public function setIdVehicule($vehiculeId)
+    public function setVehiculeId(?int $vehiculeId): self
     {
         $this->vehiculeId = $vehiculeId;
+
+        return $this;
     }
 
     public function getOfferId(): ?int
