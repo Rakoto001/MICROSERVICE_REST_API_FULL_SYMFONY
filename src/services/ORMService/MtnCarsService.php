@@ -5,11 +5,12 @@ namespace App\Services\ORMService;
 use App\Entity\User;
 use App\Entity\MtnCars;
 use App\Repository\MtnCarsRepository;
+use App\Services\ORMService\BaseService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\DTO\RequestBodyParametters\RequestBody;
 use App\DTO\RequestBodyParametters\RequestFilterContentBody;
 
-class MtnCarsService
+class MtnCarsService extends BaseService
 {
     private $manager;
     private $repos;
@@ -26,7 +27,7 @@ class MtnCarsService
      * @param RequestBody $oRFilters
      * @return void
      */
-    public function makeSearchByFilterParametters($oRFilters)
+    public function makeSearchByFilterParametters($oRFilters) :iterable
     {
 
        $oCars = $this->repos->findCarsByFilterParametters($oRFilters);

@@ -18,6 +18,7 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
 use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
+use App\Entity\MatrixCars;
 use App\Services\ORMService\MatrixCarsService;
 
 /**
@@ -49,24 +50,49 @@ class CarSearchApiController extends AbstractApiController
     public function globalSearch(Request $request, SearchBodyDtoTransformers $oType)
     {
         $oCars = [];
+        $oAllOutputCars = [];
         
         $allInputParamsSearch = $request->request->all();
         $oInputSearch = $this->baseService->formalizeInput($allInputParamsSearch);
 
         // Recherche pour MtnCars
-        // $oMtnOutSearch = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
+        $oMtnOutSearch = $this->mtnService->makeSearchByFilterParametters($oInputSearch);
 
         // Recherche pour MatrixCars
         $oMatrixOutSearch = $this->matrixService->makeSearchByFilterParametters($oInputSearch);
-// dd($oMatrixOutSearch);
+
+        array_push($oAllOutputCars, ($oMatrixOutSearch), current($oMtnOutSearch));
+        // dd($oAllOutputCars);
+
         // recherche par filtre oMtnOutSearch
         // $oCars = $this->rSResponse->transformResultSearchResponseObject($oMtnOutSearch);
-        $oCars = $this->rSResponse->transformResultSearchResponseObject($oMatrixOutSearch);
+        $oCars = $this->rSResponse->transformResultSearchResponseObject($oAllOutputCars);
 
-        
-        //  tsimaintsy mi return ciew zay vo mandeha le listener
-    //  * @Rest\View(serializerGroups={"api_global_search"})
-        // return $oOutSearch;
-        return new JSONResponse($oCars);
+        return $oCars;
+        // return new JSONResponse($oCars);
+    }
+
+
+    /**
+     * @Rest\Get("/cars/details/{reference}", name="api_cars_details")
+     * @Rest\View()
+     */
+    public function carDetails(string $reference)
+    {
+        // meth get
+        //  rech par reference 
+        // si meme ref affiche les deux
+        //  params get reference
+        //  params retour => même retour que globalSearch
+        // rturn view
+
+        // $oMtnOutSearch = $this->mtnService->makeSearchByReference($reference);
+
+        // Recherche pour MatrixCars
+        $oCombinedCarSearch = $this->baseService->makeSearchByReference($reference, 'MatrixCars');
+        $oCars = $this->rSResponse->transformResultSearchResponseObject($oCombinedCarSearch);
+
+        return $oCars;
+
     }
 }

@@ -9,6 +9,8 @@ use App\DTO\RequestBodyParametters\RequestBody;
 use App\DTO\RequestBodyParametters\RequestFilterContentBody;
 use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\InputSearchTransformer\SearchFilterContentBodyDtoTransformers;
+use App\Entity\MatrixCars;
+use App\Entity\MtnCars;
 
 class BaseService
 {
@@ -25,14 +27,13 @@ class BaseService
     }
 
     /**
-     * Undocumented function
+     * formalisation de input function
      *
      * @param [type] $parametters
      * @return RequestFilterContentBody
      */
    public function formalizeInput(array $parametters) :RequestBody
    {
-    //    dd(($parametters["filtres"]["marque"]));
     
        $dateSortieInput = $parametters["filtres"]["dateSortie"] ? DateTime::createFromFormat('d/m/Y', '1/10/'.$parametters["filtres"]["dateSortie"]) : "";
 
@@ -47,18 +48,23 @@ class BaseService
                                                                     $parametters["types"]["nombreResultats"],
                                                                     $parametters["types"]["ordre"]
 
-);
-       // SearchBodyDtoTransformers
-    //    $oInput = $this->sFCBody->transformSearchInputFilterObject($parametters["filtres"]["marque"], 
-    //                                                                 $parametters["filtres"]["modele"], 
-    //                                                                 $parametters["filtres"]["energie"], 
-    //                                                                 $parametters["filtres"]["boiteVitesse"], 
-    //                                                                 $parametters["filtres"]["km"],
-    //                                                                 $dateSortieInput
-    //                                                             );
+      );
 
 
        return $oInput;
+   }
+
+   public function makeSearchByReference(string $reference, $entityName) :array
+   {
+      $raResultSearch = [];
+
+      $matrixReference = $this->manager->getRepository(MatrixCars::class)->findBy(['reference' => $reference]);
+      $mtnReference = $this->manager->getRepository(MtnCars::class)->findBy(['reference' => $reference]);
+      
+      $raResultSearch = array_merge($matrixReference, $mtnReference);
+
+      return $raResultSearch;
+      
    }
 
 }

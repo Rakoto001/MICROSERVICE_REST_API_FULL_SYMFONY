@@ -22,7 +22,9 @@ fos_rest:
     view:
         formats: { json: true, xml: false, rss: false }
         view_response_listener: true
-
+    
+    body_converter:
+        enabled: true
 
     # ENCORE en attente de confirmation
     # ENCORE en attente de confirmation
