@@ -89,10 +89,22 @@ class CarSearchApiController extends AbstractApiController
         // $oMtnOutSearch = $this->mtnService->makeSearchByReference($reference);
 
         // Recherche pour MatrixCars
-        $oCombinedCarSearch = $this->baseService->makeSearchByReference($reference, 'MatrixCars');
+        $oCombinedCarSearch = $this->baseService->makeSearchByReference($reference);
         $oCars = $this->rSResponse->transformResultSearchResponseObject($oCombinedCarSearch);
 
         return $oCars;
 
+    }
+
+
+    /**
+     * @Rest\Put("/cars/edit/{reference}", name="api_cars_edit")
+     */
+    public function editCars(Request $request, $reference)
+    {
+        $allParams = $request->request->all();
+        $matrixReference = $this->baseService->makeSearchByReference($reference);
+
+        dd($matrixReference);
     }
 }

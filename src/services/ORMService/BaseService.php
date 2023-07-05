@@ -54,7 +54,7 @@ class BaseService
        return $oInput;
    }
 
-   public function makeSearchByReference(string $reference, $entityName) :array
+   public function makeSearchByReference(string $reference) :array
    {
       $raResultSearch = [];
 
