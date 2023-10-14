@@ -45,7 +45,9 @@ class CarSearchApiController extends AbstractApiController
 
     /**
      * @Rest\Post("/cars/global/search", name="api_global_search_cars")
-     * @Rest\View(serializerGroups={"api_global_search"})
+     * @Rest\View(statusCode=200,
+     * serializerGroups={"api_global_search"
+     * })
      */
     public function globalSearch(Request $request, SearchBodyDtoTransformers $oType)
     {
@@ -68,6 +70,7 @@ class CarSearchApiController extends AbstractApiController
         // $oCars = $this->rSResponse->transformResultSearchResponseObject($oMtnOutSearch);
         $oCars = $this->rSResponse->transformResultSearchResponseObject($oAllOutputCars);
 
+        // return $this->respond($oCars);
         return $oCars;
         // return new JSONResponse($oCars);
     }
