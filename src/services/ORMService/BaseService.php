@@ -11,6 +11,7 @@ use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\InputSearchTransformer\SearchFilterContentBodyDtoTransformers;
 use App\Entity\MatrixCars;
 use App\Entity\MtnCars;
+use App\Entity\Produit;
 
 class BaseService
 {
@@ -25,6 +26,35 @@ class BaseService
         $this->repos = $repos;
         $this->searchBody = $searchBody;
     }
+
+
+
+    public function makeSearchById(string $id) :array
+    {
+       $aResultSearch = [];
+ 
+       $aResultSearch = $this->manager->getRepository(Produit::class)->findBy(['id' => $id]);
+ 
+       return $aResultSearch;
+       
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * formalisation de input function
@@ -53,6 +83,24 @@ class BaseService
 
        return $oInput;
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
    public function makeSearchByReference(string $reference) :array
    {

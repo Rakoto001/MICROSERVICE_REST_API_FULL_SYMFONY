@@ -15,8 +15,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
 
-    public function getSalt()
+    public function getUserIdentifier(): string{
+
+        return 'e';
+    }
+    public function getSalt(): string
     {
+
+        return 'e';
     }
 
     /**
