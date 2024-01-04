@@ -82,32 +82,35 @@ class CarSearchApiController extends AbstractApiController
      */
     public function carDetails(string $reference)
     {
-        // meth get
-        //  rech par reference 
-        // si meme ref affiche les deux
-        //  params get reference
-        //  params retour => même retour que globalSearch
-        // rturn view
-
-        // $oMtnOutSearch = $this->mtnService->makeSearchByReference($reference);
-
-        // Recherche pour MatrixCars
+     
         $oCombinedCarSearch = $this->baseService->makeSearchByReference($reference);
         $oCars = $this->rSResponse->transformResultSearchResponseObject($oCombinedCarSearch);
 
         return $oCars;
-
     }
 
 
     /**
-     * @Rest\Put("/cars/edit/{reference}", name="api_cars_edit")
+     * @Rest\Put("/cars/edit/{reference}", name="api_cars_modification")
+     * @Rest\View()
      */
-    public function editCars(Request $request, $reference)
+    public function carModification(Request $request,string $reference)
     {
         $allParams = $request->request->all();
         $matrixReference = $this->baseService->makeSearchByReference($reference);
 
-        dd($matrixReference);
+        // return $oCars;
+    }
+
+
+
+    /**
+     * @Rest\Post("/cars/edit/{reference}", name="api_cars_edit")
+     * @Rest\View()
+     */
+    public function editCars(Request $request, $reference)
+    {
+      
+
     }
 }

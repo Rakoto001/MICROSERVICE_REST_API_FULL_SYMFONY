@@ -18,6 +18,8 @@ class BaseService
     private $manager;
     private $repos;
     private $searchBody;
+    const MTNCARS = "MTN";
+    const MATRIXCARS = "MATRIX";
 
     public function __construct(EntityManagerInterface $manager, 
                                 UserRepository $repos,
@@ -86,30 +88,38 @@ class BaseService
 
 
 
+   /**
+    * prends la valeur de la référence
+    *
+    * @param string $combinedReference
+    * @return integer
+    */
+   public function getReference(string $combinedReference): array
+   {
+      $combinedReference= explode('-', $combinedReference);
 
+      return ['prefix' => current($combinedReference),
+            'reference' => next($combinedReference)];
+      
+   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   /**
+    * recherche par référence de la voiture
+    *
+    * @param string $reference
+    * @return array
+    */
    public function makeSearchByReference(string $reference) :array
    {
       $raResultSearch = [];
 
-      $matrixReference = $this->manager->getRepository(MatrixCars::class)->findBy(['reference' => $reference]);
-      $mtnReference = $this->manager->getRepository(MtnCars::class)->findBy(['reference' => $reference]);
-      
-      $raResultSearch = array_merge($matrixReference, $mtnReference);
+      $aReference = $this->getReference($reference);
+
+      if ($aReference['prefix'] === self::MTNCARS) {
+         $raResultSearch = $this->manager->getRepository(MtnCars::class)->findBy(['reference' => $aReference['reference']]);
+      } else if ($aReference['prefix'] === self::MATRIXCARS) {
+         $raResultSearch = $this->manager->getRepository(MatrixCars::class)->findBy(['reference' => $aReference['reference']]);
+      }
 
       return $raResultSearch;
       
