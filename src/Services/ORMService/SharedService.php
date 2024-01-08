@@ -14,7 +14,7 @@ use App\Entity\MtnCars;
 use App\Entity\Produit;
 use App\Services\Validation\CarsValidation;
 
-class BaseService
+class SharedService
 {
     private $manager;
     private $repos;
@@ -26,7 +26,8 @@ class BaseService
                                 UserRepository $repos,
                                 SearchBodyDtoTransformers $searchBody,
                                 private MatrixCarsService $matrixService,
-                                private SharedService $sharedService) {
+                                private MtnCarsService $mtnService,
+                                private CarsValidation $carsValidation) {
         $this->manager = $manager;
         $this->repos = $repos;
         $this->searchBody = $searchBody;
@@ -111,6 +112,26 @@ class BaseService
    }
 
 
+   /**
+    * actualisation des props par les input datas
+    *
+    * @param array $aReference
+    * @param array $datas
+    * @return boolean
+    */
+   public function updateCarPropertiesByReference($aReference, array $datas) : bool
+   {
+      $oCar = $this->searchObjectByReference($aReference);
+
+      if (current($aReference) == self::MTNCARS) {
+         $this->mtnService->update(current($oCar));
+      } elseif (current($aReference) == self::MATRIXCARS) {
+         $this->matrixService->update(current($oCar));
+      }
+
+      return false;
+      
+   }
 
    /**
     * recherche de l'existence de la réf dans la base
@@ -130,5 +151,9 @@ class BaseService
       
       return $raResultSearch;
    }
+
+
+   
+
 
 }

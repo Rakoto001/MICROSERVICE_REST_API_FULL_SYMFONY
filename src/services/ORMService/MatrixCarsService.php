@@ -8,13 +8,15 @@ use App\Services\ORMService\BaseService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\DTO\RequestBodyParametters\RequestBody;
 use App\DTO\RequestBodyParametters\RequestFilterContentBody;
+use App\Entity\Vehicule;
 
 class MatrixCarsService extends BaseService
 {
     private $manager;
     private $repos;
 
-    public function __construct(EntityManagerInterface $manager, MatrixCarsRepository $repos) {
+    public function __construct(EntityManagerInterface $manager, MatrixCarsRepository $repos,
+                                private VehiculeService $vehiculeService) {
         $this->manager = $manager;
         $this->repos = $repos;
     }
@@ -32,6 +34,21 @@ class MatrixCarsService extends BaseService
        $oCars = $this->repos->findCarsByFilterParametters($oRFilters);
 
        return $oCars;
+    }
+
+    public function update(MatrixCars $oCar)
+    {
+        // $oVehicule = $this->vehiculeService->findOneByid($oCar->getVehicule()->getId());
+        $oVehicule = $this->vehiculeService->findOneByid(7);
+        // if ($oVehicule instanceof Vehicule) {
+
+        // } 
+
+
+
+        return false;
+
+
     }
 
   

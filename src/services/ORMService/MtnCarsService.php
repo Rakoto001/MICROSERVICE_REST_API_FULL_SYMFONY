@@ -35,4 +35,10 @@ class MtnCarsService extends BaseService
        return $oCars;
     }
 
+    public function update(MtnCars $oCar)
+    {
+        dd($oCar);
+        
+    }
+
 }

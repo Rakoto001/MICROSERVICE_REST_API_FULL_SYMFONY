@@ -7,19 +7,22 @@ namespace App\Controller;
 
 use App\Entity\User;
 
+use App\Entity\MatrixCars;
 use App\Services\ORMService\BaseService;
 use App\Services\ORMService\MtnCarsService;
+use App\Services\Validation\CarsValidation;
 use Symfony\Component\HttpFoundation\Request;
+use App\Services\ORMService\MatrixCarsService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
-use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
+use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
-use App\Entity\MatrixCars;
-use App\Services\ORMService\MatrixCarsService;
+use App\Services\ORMService\SharedService;
 
 /**
  * @Route("/api", name="api_")
@@ -34,7 +37,9 @@ class CarSearchApiController extends AbstractApiController
     public function __construct(ResultSearchResponseDtoTransformer $rSResponse,
                                 BaseService $baseService,
                                 MtnCarsService $mtnService,
-                                MatrixCarsService $matrixService
+                                MatrixCarsService $matrixService,
+                                private CarsValidation $carsValidation,
+                                private SharedService $sharedService
                                 )
     {
         $this->rSResponse = $rSResponse;
@@ -90,16 +95,23 @@ class CarSearchApiController extends AbstractApiController
     }
 
 
-    /**
-     * @Rest\Put("/cars/edit/{reference}", name="api_cars_modification")
-     * @Rest\View()
-     */
+ 
+    #[Rest\Put("/cars/edit/{reference}", name:"api_cars_modification")]
+    #[Rest\View()]
     public function carModification(Request $request,string $reference)
     {
-        $allParams = $request->request->all();
-        $matrixReference = $this->baseService->makeSearchByReference($reference);
+        // $allParams = $request->request->all();
+        $aInputData = json_decode($request->getContent(), true);
+        $combinedReference = $this->baseService->getReference($reference);
+        $oCars = $this->baseService->searchObjectByReference($combinedReference);
 
-        // return $oCars;
+        if ($this->carsValidation->isValidatedInputCarReference($oCars)) {
+
+            $combinedReference = $this->sharedService->updateCarPropertiesByReference($combinedReference, $aInputData);
+        } else {
+
+            throw new NotFoundHttpException();
+        }
     }
 
 
