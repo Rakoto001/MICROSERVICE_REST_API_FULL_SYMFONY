@@ -25,8 +25,8 @@ class VehiculeService
         $oVehicule = $manager->findBy(['id' => $id]);
 
         if (count($oVehicule) <= 0) {
-            throw new NotFoundException('Identifiant Inconnu', 'Erreur', 404);
 
+            throw new NotFoundException('Identifiant Inconnu', 'Erreur', 404);
         }
         
         

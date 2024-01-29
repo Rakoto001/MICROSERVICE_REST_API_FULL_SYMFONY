@@ -1,0 +1,16 @@
+<?
+
+namespace App\Services\Domain;
+
+use App\Services\Domain\UpdateEntityInterface;
+
+
+class UpdateMtnCarsIImpl implements UpdateEntityInterface
+{
+
+    public function update()
+    {
+        
+    }
+
+}

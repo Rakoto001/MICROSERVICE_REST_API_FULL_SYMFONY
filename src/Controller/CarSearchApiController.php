@@ -8,7 +8,9 @@ namespace App\Controller;
 use App\Entity\User;
 
 use App\Entity\MatrixCars;
+use App\Services\Http\ApiJsonResponse;
 use App\Services\ORMService\BaseService;
+use App\Services\ORMService\SharedService;
 use App\Services\ORMService\MtnCarsService;
 use App\Services\Validation\CarsValidation;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +24,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\DTO\Transformer\InputSearchTransformer\SearchBodyDtoTransformers;
 use App\DTO\Transformer\OutputSearchResponseDto\OutputGlobalSearchResponse;
 use App\DTO\Transformer\ResultSearchResponseTransformer\ResultSearchResponseDtoTransformer;
-use App\Services\ORMService\SharedService;
 
 /**
  * @Route("/api", name="api_")
@@ -39,7 +40,8 @@ class CarSearchApiController extends AbstractApiController
                                 MtnCarsService $mtnService,
                                 MatrixCarsService $matrixService,
                                 private CarsValidation $carsValidation,
-                                private SharedService $sharedService
+                                private SharedService $sharedService,
+                                private ApiJsonResponse $jsonResponse
                                 )
     {
         $this->rSResponse = $rSResponse;
@@ -112,6 +114,8 @@ class CarSearchApiController extends AbstractApiController
 
             throw new NotFoundHttpException();
         }
+        dd('fin');
+    //    dd( $this->jsonResponse->updateSuccessJsonResponse());
     }
 
 

@@ -36,21 +36,28 @@ class MatrixCarsService extends BaseService
        return $oCars;
     }
 
-    public function update(MatrixCars $oCar)
+    public function update(MatrixCars $oCar, array $datas) :bool
     {
-        // $oVehicule = $this->vehiculeService->findOneByid($oCar->getVehicule()->getId());
-        $oVehicule = $this->vehiculeService->findOneByid(7);
-        // if ($oVehicule instanceof Vehicule) {
+        $datas = (current($datas));
+        $oVehicule = $this->vehiculeService->findOneByid($oCar->getVehicule()->getId());
 
-        // } 
+        // actualisation data pour le car propre MatrixCars
+        $oCar->setFiscalPower($datas['puissancefiscale']);
+        $this->manager->persist($oCar);
+        $this->manager->flush();
 
+        if (current($oVehicule) instanceof Vehicule){
+            $oVehicule = current($oVehicule);
+            $oVehicule->setColor($datas['couleur']);//
+            $oVehicule->setKilometers($datas['nombredekmvoiture']);//
+            $this->manager->persist($oVehicule);
+            $this->manager->flush();
+
+            return true;
+        }
 
 
         return false;
-
-
     }
-
-  
 
 }

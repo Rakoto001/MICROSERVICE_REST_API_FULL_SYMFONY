@@ -1,0 +1,11 @@
+<?
+
+namespace App\Services\Domain;
+
+
+interface UpdateEntityInterface
+{
+
+    public function update();
+
+}

@@ -124,9 +124,11 @@ class SharedService
       $oCar = $this->searchObjectByReference($aReference);
 
       if (current($aReference) == self::MTNCARS) {
-         $this->mtnService->update(current($oCar));
+
+        return $this->mtnService->update(current($oCar), $datas);
       } elseif (current($aReference) == self::MATRIXCARS) {
-         $this->matrixService->update(current($oCar));
+
+        return $this->matrixService->update(current($oCar), $datas);
       }
 
       return false;
